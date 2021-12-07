@@ -1,17 +1,32 @@
 import React from 'react'
-import {Button, StyleSheet, Text, View} from 'react-native'
+import {StyleSheet, Text, View} from 'react-native'
+import type {CardDefinition} from '../types'
 
 type Props = {
   onPressNewGame(): void
+  rightCards: Set<CardDefinition>
+  wrongCards: Set<CardDefinition>
 }
 
-export default function EndCard({onPressNewGame}: Props) {
+export default function EndCard({
+  onPressNewGame,
+  rightCards,
+  wrongCards,
+}: Props) {
   return (
     <View onTouchEnd={onPressNewGame}>
       <View style={styles.root}>
-        <Text style={styles.text}>終わり!</Text>
+        <Text style={styles.subtext}>You got:</Text>
+        <Text style={styles.text}>
+          {100 *
+            Math.round(rightCards.size / (rightCards.size + wrongCards.size))}
+          %
+        </Text>
+        <Text style={styles.subtext}>
+          {rightCards.size} of {wrongCards.size}
+        </Text>
         <View style={styles.cta}>
-          <Text style={styles.ctaText}>Tap anywhere to start</Text>
+          <Text style={styles.ctaText}>Tap anywhere to restart</Text>
         </View>
       </View>
     </View>
@@ -31,7 +46,6 @@ const styles = StyleSheet.create({
     margin: 20,
     paddingHorizontal: 24,
     position: 'relative',
-    // flex: 0,
     backgroundColor: 'limegreen',
     alignItems: 'center',
     justifyContent: 'center',
@@ -40,8 +54,9 @@ const styles = StyleSheet.create({
     borderBottomColor: '#222',
     borderBottomWidth: 8,
     bottom: -128,
+    marginHorizontal: -24,
     marginVertical: 36,
-    padding: 4,
+    paddingVertical: 4,
     position: 'absolute',
     textAlign: 'center',
   },
@@ -49,9 +64,9 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: '800',
   },
-
   text: {
     fontWeight: '800',
     fontSize: 64,
   },
+  subtext: {},
 })

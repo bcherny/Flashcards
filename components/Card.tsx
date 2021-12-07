@@ -1,16 +1,36 @@
 import React from 'react'
-import {GestureResponderEvent, StyleSheet, Text, View} from 'react-native'
+import {
+  GestureResponderEvent,
+  PanResponderGestureState,
+  StyleSheet,
+  Text,
+  TouchableWithoutFeedback,
+} from 'react-native'
+import GestureRecognizer from 'react-native-swipe-gestures'
 
 type Props = {
-  onTouchEnd(e: GestureResponderEvent): void
+  onSwipeLeft?: (state: PanResponderGestureState) => void
+  onSwipeRight?: (state: PanResponderGestureState) => void
+  onPress?: (e: GestureResponderEvent) => void
   text: string
 }
 
-export default function Card({onTouchEnd, text}: Props) {
+export default function Card({
+  onSwipeLeft = () => {},
+  onSwipeRight = () => {},
+  onPress = () => {},
+  text,
+}: Props) {
   return (
-    <View onTouchEnd={onTouchEnd} style={styles.root}>
-      <Text style={styles.text}>{text}</Text>
-    </View>
+    <GestureRecognizer
+      onSwipeLeft={onSwipeLeft}
+      onSwipeRight={onSwipeRight}
+      style={styles.root}
+    >
+      <TouchableWithoutFeedback onPress={onPress}>
+        <Text style={styles.text}>{text}</Text>
+      </TouchableWithoutFeedback>
+    </GestureRecognizer>
   )
 }
 

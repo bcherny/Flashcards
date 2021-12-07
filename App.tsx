@@ -1,8 +1,5 @@
-import {StatusBar} from 'expo-status-bar'
 import React from 'react'
 import {StyleSheet, Text, View} from 'react-native'
-import CallOnTap from './components/CallOnTap'
-import Card from './components/Card'
 import Game from './components/Game'
 
 const TEMPLATES = {
@@ -15,6 +12,10 @@ const CARDS = [
   {
     front: 'わたし',
     back: 'I',
+  },
+  {
+    front: 'ぼく',
+    back: 'I (male)',
   },
 ]
 

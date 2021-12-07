@@ -1,49 +1,82 @@
 import {StatusBar} from 'expo-status-bar'
 import React, {useState} from 'react'
-import {GestureResponderEvent, StyleSheet, Text, View} from 'react-native'
-import CallOnTap from './CallOnTap'
+import {
+  GestureResponderEvent,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native'
 import Card from './Card'
 import EndCard from './EndCard'
-
-const TEMPLATES = {
-  StandardTemplate({a}: {a: string}): React.ReactElement {
-    return <>a</>
-  },
-}
+import type {CardDefinition} from '../types'
 
 type Props = {
-  cards: Card[]
-}
-
-type Card = {
-  front: string
-  back: string
+  cards: CardDefinition[]
 }
 
 export default function Game({cards}: Props) {
   const [index, setIndex] = useState(0)
   const [side, setSide] = useState<'front' | 'back'>('front')
+  const [rightCards, setRightCards] = useState<Set<CardDefinition>>(new Set())
+  const [wrongCards, setWrongCards] = useState<Set<CardDefinition>>(new Set())
+
+  const currentCard = cards[index]
+
+  function next() {
+    setIndex((_) => _ + 1)
+    setSide('front')
+  }
 
   function onTap() {
-    setIndex((_) => _ + 1)
+    console.log('tap')
+    next()
   }
 
   function onTapCard(e: GestureResponderEvent) {
+    console.log('tap card')
     e.stopPropagation()
-    setSide((_) => (_ === 'front' ? 'back' : 'front'))
+    if (side === 'back') {
+      return
+    }
+    setSide('back')
+  }
+
+  function onSwipeCardLeft() {
+    console.log('left')
+    setWrongCards(wrongCards.add(currentCard))
+    next()
+  }
+
+  function onSwipeCardRight() {
+    console.log('right')
+    setRightCards(rightCards.add(currentCard))
+    next()
   }
 
   function onTapNewGame() {
     setIndex(0)
   }
 
-  if (!cards[index]) {
-    return <EndCard onPressNewGame={onTapNewGame} />
+  if (!currentCard) {
+    return (
+      <EndCard
+        onPressNewGame={onTapNewGame}
+        rightCards={rightCards}
+        wrongCards={wrongCards}
+      />
+    )
   }
 
   return (
-    <View onTouchEnd={onTap} style={styles.root}>
-      <Card onTouchEnd={onTapCard} text={cards[index][side]} />
+    <View style={styles.root}>
+      <TouchableWithoutFeedback onPress={onTap}>
+        <Card
+          onPress={onTapCard}
+          onSwipeLeft={onSwipeCardLeft}
+          onSwipeRight={onSwipeCardRight}
+          text={currentCard[side]}
+        />
+      </TouchableWithoutFeedback>
       <StatusBar style="auto" />
     </View>
   )
