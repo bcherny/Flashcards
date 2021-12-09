@@ -11,21 +11,19 @@ import {RootStackParamList} from '../Navigator'
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Lobby'>
 
-const DATA = [
-  {text: 'Chapter 1', key: 'chapter-1'},
-  {text: 'Chapter 2', key: 'chapter-2'},
-]
+const DATA = [{name: 'Chapter 1'}, {name: 'Chapter 2'}]
 
 export default function Menu({navigation}: Props): React.ReactElement {
   return (
     <FlatList
       data={DATA}
-      renderItem={({item}) => (
+      renderItem={({item: {name}}) => (
         <TouchableNativeFeedback
-          onPress={() => navigation.navigate('Game', {id: item.key})}
+          key={name}
+          onPress={() => navigation.navigate('Game', {name})}
         >
           <View>
-            <Text style={styles.item}>{item.text}</Text>
+            <Text style={styles.item}>{name}</Text>
           </View>
         </TouchableNativeFeedback>
       )}

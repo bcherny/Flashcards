@@ -13,12 +13,12 @@ export default function App() {
           <Stack.Screen
             name="Lobby"
             component={Lobby}
-            options={{title: 'Flashcards'}}
+            options={{title: 'Home'}}
           />
           <Stack.Screen
             name="Game"
             component={Game}
-            options={{title: 'Play game'}}
+            options={({route}) => ({title: route.params.name})}
           />
         </Stack.Navigator>
       </SafeAreaView>
