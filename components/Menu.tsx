@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react'
+import React from 'react'
 import BottomSheet, {BottomSheetFlatList} from '@gorhom/bottom-sheet'
 import {StyleSheet, Text, TouchableWithoutFeedback, View} from 'react-native'
 

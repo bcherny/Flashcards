@@ -1,38 +1,37 @@
 import React from 'react'
-import {StyleSheet, Text, View} from 'react-native'
+import {SafeAreaView, StyleSheet, Text, View} from 'react-native'
+import Lobby from './components/Lobby'
+import {NavigationContainer} from '@react-navigation/native'
 import Game from './components/Game'
-
-const TEMPLATES = {
-  StandardTemplate({a}: {a: string}): React.ReactElement {
-    return <>a</>
-  },
-}
-
-const CARDS = [
-  {
-    front: 'わたし',
-    back: 'I',
-  },
-  {
-    front: 'ぼく',
-    back: 'I (male)',
-  },
-]
+import {Stack} from './Navigator'
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Game cards={CARDS} />
-    </View>
+    <NavigationContainer>
+      <SafeAreaView style={styles.root}>
+        <Stack.Navigator>
+          <Stack.Screen
+            name="Lobby"
+            component={Lobby}
+            options={{title: 'Flashcards'}}
+          />
+          <Stack.Screen
+            name="Game"
+            component={Game}
+            options={{title: 'Play game'}}
+          />
+        </Stack.Navigator>
+      </SafeAreaView>
+    </NavigationContainer>
   )
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  root: {
     backgroundColor: '#f9f9f9',
+    flex: 1,
     alignItems: 'stretch',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     width: '100%',
   },
 })

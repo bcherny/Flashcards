@@ -10,18 +10,29 @@ import Card from './Card'
 import EndCard from './EndCard'
 import type {CardDefinition} from '../types'
 import Menu from './Menu'
+import {RootStackParamList} from '../Navigator'
+import {NativeStackScreenProps} from '@react-navigation/native-stack'
 
-type Props = {
-  cards: CardDefinition[]
-}
+type Props = NativeStackScreenProps<RootStackParamList, 'Game'>
 
-export default function Game({cards}: Props): React.ReactElement {
+const CARDS = [
+  {
+    front: 'わたし',
+    back: 'I',
+  },
+  {
+    front: 'ぼく',
+    back: 'I (male)',
+  },
+]
+
+export default function Game({}: Props): React.ReactElement {
   const [index, setIndex] = useState(0)
   const [side, setSide] = useState<'front' | 'back'>('front')
   const [rightCards, setRightCards] = useState<Set<CardDefinition>>(new Set())
   const [wrongCards, setWrongCards] = useState<Set<CardDefinition>>(new Set())
 
-  const currentCard = cards[index]
+  const currentCard = CARDS[index]
 
   function next() {
     setIndex((_) => _ + 1)
