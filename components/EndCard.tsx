@@ -12,7 +12,7 @@ export default function EndCard({
   onPressNewGame,
   rightCards,
   wrongCards,
-}: Props) {
+}: Props): React.ReactElement {
   return (
     <View onTouchEnd={onPressNewGame}>
       <View style={styles.root}>

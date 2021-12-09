@@ -20,7 +20,7 @@ export default function Card({
   onSwipeRight = () => {},
   onPress = () => {},
   text,
-}: Props) {
+}: Props): React.ReactElement {
   return (
     <GestureRecognizer
       onSwipeLeft={onSwipeLeft}

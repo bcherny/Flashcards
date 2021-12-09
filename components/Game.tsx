@@ -9,12 +9,13 @@ import {
 import Card from './Card'
 import EndCard from './EndCard'
 import type {CardDefinition} from '../types'
+import Menu from './Menu'
 
 type Props = {
   cards: CardDefinition[]
 }
 
-export default function Game({cards}: Props) {
+export default function Game({cards}: Props): React.ReactElement {
   const [index, setIndex] = useState(0)
   const [side, setSide] = useState<'front' | 'back'>('front')
   const [rightCards, setRightCards] = useState<Set<CardDefinition>>(new Set())
@@ -55,7 +56,10 @@ export default function Game({cards}: Props) {
 
   function onTapNewGame() {
     setIndex(0)
+    setSide('front')
   }
+
+  function onPressEditCard() {}
 
   if (!currentCard) {
     return (
@@ -77,6 +81,7 @@ export default function Game({cards}: Props) {
           text={currentCard[side]}
         />
       </TouchableWithoutFeedback>
+      <Menu onPressNewGame={onTapNewGame} onPressEditCard={() => {}} />
       <StatusBar style="auto" />
     </View>
   )
