@@ -1,6 +1,6 @@
 import React from 'react'
 import BottomSheet, {BottomSheetFlatList} from '@gorhom/bottom-sheet'
-import {StyleSheet, Text, TouchableWithoutFeedback, View} from 'react-native'
+import {StyleSheet, Text, TouchableWithoutFeedback} from 'react-native'
 
 type Props = {
   onPressEditCard(): void

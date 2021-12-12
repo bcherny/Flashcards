@@ -6,11 +6,11 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native'
-import Card from './Card'
-import EndCard from './EndCard'
-import type {CardDefinition} from '../types'
-import Menu from './Menu'
-import {RootStackParamList} from '../Navigator'
+import Card from '../Card'
+import EndCard from '../EndCard'
+import type {CardDefinition} from '../../types'
+import Menu from '../Menu'
+import {RootStackParamList} from '../../Navigator'
 import {NativeStackScreenProps} from '@react-navigation/native-stack'
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Game'>

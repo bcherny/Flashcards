@@ -1,13 +1,7 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack'
 import React from 'react'
-import {
-  FlatList,
-  StyleSheet,
-  Text,
-  TouchableNativeFeedback,
-  View,
-} from 'react-native'
-import {RootStackParamList} from '../Navigator'
+import {FlatList, StyleSheet, Text, TouchableNativeFeedback} from 'react-native'
+import {RootStackParamList} from '../../Navigator'
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Decks'>
 

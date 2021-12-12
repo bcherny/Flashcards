@@ -1,10 +1,10 @@
 import React from 'react'
-import {SafeAreaView, StyleSheet, Text, View} from 'react-native'
-import Lobby from './components/Lobby'
+import {SafeAreaView, StyleSheet} from 'react-native'
+import Lobby from './components/screens/Lobby'
 import {NavigationContainer} from '@react-navigation/native'
-import Game from './components/Game'
+import Game from './components/screens/Game'
 import {Stack} from './Navigator'
-import Decks from './components/Decks'
+import Decks from './components/screens/Decks'
 
 export default function App() {
   return (
