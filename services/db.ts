@@ -1,7 +1,7 @@
 import {FirebaseApp, initializeApp} from 'firebase/app'
 import {collection, getDocs, getFirestore} from 'firebase/firestore'
 import Constants from '../constants'
-import {Collection} from '../types'
+import {Collection, Deck} from '../types'
 
 const FIREBASE_CONFIG = {
   apiKey: Constants.FIREBASE_API_KEY,
@@ -20,5 +20,16 @@ export async function getCollections(): Promise<readonly Collection[]> {
   const app = getApp()
   const firestore = getFirestore(app)
   const docs = await getDocs(collection(firestore, 'collections'))
-  return docs.docs.map((_) => _.data()) as Collection[]
+  return docs.docs.map((_) => ({id: _.id, ..._.data()})) as Collection[]
+}
+
+export async function getDecks(collectionID: string): Promise<readonly Deck[]> {
+  const app = getApp()
+  const firestore = getFirestore(app)
+  console.log('before get', collectionID)
+  const decks = await getDocs(
+    collection(firestore, 'collections', collectionID, 'decks')
+  )
+  console.log('decks', decks)
+  return decks.docs.map((_) => ({id: _.id, ..._.data()})) as Deck[]
 }

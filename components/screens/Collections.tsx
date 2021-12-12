@@ -1,16 +1,9 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack'
 import React, {useState} from 'react'
-import {
-  FlatList,
-  StyleSheet,
-  Text,
-  TouchableWithoutFeedback,
-} from 'react-native'
+import {FlatList, StyleSheet, Text, TouchableNativeFeedback} from 'react-native'
 import SkeletonContent from 'react-native-skeleton-content'
 import useCollections from '../../hooks/useCollections'
 import {RootStackParamList} from '../../Navigator'
-import {getCollections} from '../../services/db'
-import {Collection} from '../../types'
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Collections'>
 
@@ -21,12 +14,14 @@ export default function Collections({navigation}: Props): React.ReactElement {
       <FlatList
         data={data}
         keyExtractor={(_) => _.name}
-        renderItem={({item: {name}}) => (
-          <TouchableWithoutFeedback
-            onPress={() => navigation.navigate('Decks', {name})}
+        renderItem={({item: {id, name}}) => (
+          <TouchableNativeFeedback
+            onPressOut={() =>
+              navigation.navigate('Decks', {collectionID: id, name})
+            }
           >
             <Text style={styles.item}>{name}</Text>
-          </TouchableWithoutFeedback>
+          </TouchableNativeFeedback>
         )}
       />
     </SkeletonContent>

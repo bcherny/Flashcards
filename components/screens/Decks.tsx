@@ -6,25 +6,28 @@ import {
   Text,
   TouchableWithoutFeedback,
 } from 'react-native'
+import SkeletonContent from 'react-native-skeleton-content'
+import useDecks from '../../hooks/useDecks'
 import {RootStackParamList} from '../../Navigator'
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Decks'>
 
-const DATA = [{name: 'Chapter 1'}, {name: 'Chapter 2'}]
-
-export default function Decks({navigation}: Props): React.ReactElement {
+export default function Decks({navigation, route}: Props): React.ReactElement {
+  const [isLoading, data] = useDecks(route.params.collectionID)
   return (
-    <FlatList
-      data={DATA}
-      keyExtractor={(_) => _.name}
-      renderItem={({item: {name}}) => (
-        <TouchableWithoutFeedback
-          onPress={() => navigation.navigate('Cards', {name})}
-        >
-          <Text style={styles.item}>{name}</Text>
-        </TouchableWithoutFeedback>
-      )}
-    />
+    <SkeletonContent isLoading={isLoading} containerStyle={styles.skeleton}>
+      <FlatList
+        data={data}
+        keyExtractor={(_) => _.name}
+        renderItem={({item: {name}}) => (
+          <TouchableWithoutFeedback
+            onPress={() => navigation.navigate('Cards', {name})}
+          >
+            <Text style={styles.item}>{name}</Text>
+          </TouchableWithoutFeedback>
+        )}
+      />
+    </SkeletonContent>
   )
 }
 
@@ -34,5 +37,8 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: 18,
     height: 44,
+  },
+  skeleton: {
+    flex: 1,
   },
 })
