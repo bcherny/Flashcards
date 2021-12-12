@@ -1,8 +1,9 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack'
 
 export type RootStackParamList = {
+  Decks: undefined
   Game: {name: string}
-  Lobby: undefined
+  Lobby: {name: string}
 }
 
 export const Stack = createNativeStackNavigator<RootStackParamList>()

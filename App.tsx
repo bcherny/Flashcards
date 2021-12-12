@@ -4,6 +4,7 @@ import Lobby from './components/Lobby'
 import {NavigationContainer} from '@react-navigation/native'
 import Game from './components/Game'
 import {Stack} from './Navigator'
+import Decks from './components/Decks'
 
 export default function App() {
   return (
@@ -11,9 +12,14 @@ export default function App() {
       <SafeAreaView style={styles.root}>
         <Stack.Navigator>
           <Stack.Screen
+            name="Decks"
+            component={Decks}
+            options={{title: 'Home'}}
+          />
+          <Stack.Screen
             name="Lobby"
             component={Lobby}
-            options={{title: 'Home'}}
+            options={({route}) => ({title: route.params.name})}
           />
           <Stack.Screen
             name="Game"

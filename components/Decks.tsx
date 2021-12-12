@@ -9,18 +9,18 @@ import {
 } from 'react-native'
 import {RootStackParamList} from '../Navigator'
 
-type Props = NativeStackScreenProps<RootStackParamList, 'Lobby'>
+type Props = NativeStackScreenProps<RootStackParamList, 'Decks'>
 
-const DATA = [{name: 'Chapter 1'}, {name: 'Chapter 2'}]
+const DATA = [{name: 'CCSF Japanese 1A'}]
 
-export default function Lobby({navigation}: Props): React.ReactElement {
+export default function Decks({navigation}: Props): React.ReactElement {
   return (
     <FlatList
       data={DATA}
       keyExtractor={(_) => _.name}
       renderItem={({item: {name}}) => (
         <TouchableNativeFeedback
-          onPress={() => navigation.navigate('Game', {name})}
+          onPress={() => navigation.navigate('Lobby', {name})}
         >
           <Text style={styles.item}>{name}</Text>
         </TouchableNativeFeedback>
