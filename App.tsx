@@ -1,10 +1,10 @@
 import React from 'react'
 import {SafeAreaView, StyleSheet} from 'react-native'
-import Lobby from './components/screens/Lobby'
-import {NavigationContainer} from '@react-navigation/native'
-import Game from './components/screens/Game'
-import {Stack} from './Navigator'
 import Decks from './components/screens/Decks'
+import {NavigationContainer} from '@react-navigation/native'
+import Cards from './components/screens/Cards'
+import {Stack} from './Navigator'
+import Collections from './components/screens/Collections'
 
 export default function App() {
   return (
@@ -12,18 +12,18 @@ export default function App() {
       <SafeAreaView style={styles.root}>
         <Stack.Navigator>
           <Stack.Screen
-            name="Decks"
-            component={Decks}
+            name="Collections"
+            component={Collections}
             options={{title: 'Home'}}
           />
           <Stack.Screen
-            name="Lobby"
-            component={Lobby}
+            name="Decks"
+            component={Decks}
             options={({route}) => ({title: route.params.name})}
           />
           <Stack.Screen
-            name="Game"
-            component={Game}
+            name="Cards"
+            component={Cards}
             options={({route}) => ({title: route.params.name})}
           />
         </Stack.Navigator>

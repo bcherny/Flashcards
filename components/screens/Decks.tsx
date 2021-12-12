@@ -1,11 +1,16 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack'
 import React from 'react'
-import {FlatList, StyleSheet, Text, TouchableNativeFeedback} from 'react-native'
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableWithoutFeedback,
+} from 'react-native'
 import {RootStackParamList} from '../../Navigator'
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Decks'>
 
-const DATA = [{name: 'CCSF Japanese 1A'}]
+const DATA = [{name: 'Chapter 1'}, {name: 'Chapter 2'}]
 
 export default function Decks({navigation}: Props): React.ReactElement {
   return (
@@ -13,11 +18,11 @@ export default function Decks({navigation}: Props): React.ReactElement {
       data={DATA}
       keyExtractor={(_) => _.name}
       renderItem={({item: {name}}) => (
-        <TouchableNativeFeedback
-          onPress={() => navigation.navigate('Lobby', {name})}
+        <TouchableWithoutFeedback
+          onPress={() => navigation.navigate('Cards', {name})}
         >
           <Text style={styles.item}>{name}</Text>
-        </TouchableNativeFeedback>
+        </TouchableWithoutFeedback>
       )}
     />
   )

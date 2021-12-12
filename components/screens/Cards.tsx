@@ -13,7 +13,7 @@ import Menu from '../Menu'
 import {RootStackParamList} from '../../Navigator'
 import {NativeStackScreenProps} from '@react-navigation/native-stack'
 
-type Props = NativeStackScreenProps<RootStackParamList, 'Game'>
+type Props = NativeStackScreenProps<RootStackParamList, 'Cards'>
 
 const CARDS = [
   {
@@ -26,7 +26,7 @@ const CARDS = [
   },
 ]
 
-export default function Game({}: Props): React.ReactElement {
+export default function Cards({}: Props): React.ReactElement {
   const [index, setIndex] = useState(0)
   const [side, setSide] = useState<'front' | 'back'>('front')
   const [rightCards, setRightCards] = useState<Set<CardDefinition>>(new Set())
@@ -47,10 +47,7 @@ export default function Game({}: Props): React.ReactElement {
   function onTapCard(e: GestureResponderEvent) {
     console.log('tap card')
     e.stopPropagation()
-    if (side === 'back') {
-      return
-    }
-    setSide('back')
+    setSide((_) => (_ === 'back' ? 'front' : 'back'))
   }
 
   function onSwipeCardLeft() {
