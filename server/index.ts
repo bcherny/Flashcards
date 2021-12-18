@@ -1,11 +1,12 @@
 import {
   createCard,
   createFolder,
+  deleteCard,
   updateCard,
   updateFolder,
   getRootFolder,
 } from './db'
-import {get, post, put, startServer} from './server'
+import {del, get, post, put, startServer} from './server'
 
 // Throw on unhandled rejected promises
 process.on('unhandledRejection', (reason, p) => {
@@ -42,6 +43,9 @@ function main() {
   })
 
   // Delete card
+  del('/api/cards/:cardID', async (req) => {
+    await deleteCard(req.params.cardID)
+  })
 
   // Create folder
   post('/api/folders', async (req) => {

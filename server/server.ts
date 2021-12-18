@@ -52,6 +52,23 @@ export function put(
   })
 }
 
+export function del(
+  route: string,
+  fn: (req: Request, res: Response) => Promise<void>
+) {
+  const app = getApp()
+  app.delete(route, async (req, res) => {
+    try {
+      await fn(req, res)
+      res.json({})
+    } catch (e) {
+      res.status(400).json({
+        error: (e as any).message,
+      })
+    }
+  })
+}
+
 export function startServer() {
   const app = getApp()
   app.listen(3000, () => console.info('Server listening on 3000...'))

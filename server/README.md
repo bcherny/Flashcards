@@ -35,6 +35,12 @@ PUT http://localhost:3000/api/cards/:cardID
 }
 ```
 
+## Delete card
+
+```
+DELETE http://localhost:3000/api/cards/:cardID
+```
+
 ## Create folder
 
 ```

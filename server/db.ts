@@ -83,6 +83,37 @@ export async function updateCard(
   return card
 }
 
+export async function deleteCard(cardID: string): Promise<void> {
+  const rootFolder = await getRootFolder()
+
+  // Update reference in memory
+  function del(folder: Folder): boolean {
+    for (let i = 0; i < folder.contents.length; i++) {
+      const item = folder.contents[i]
+      if (isCard(item) && item.id === cardID) {
+        folder.contents.splice(i, 1)
+        return true
+      }
+      if (isFolder(item)) {
+        return del(item)
+      }
+    }
+    return false
+  }
+
+  // Check result
+  const result = del(rootFolder)
+  if (!result) {
+    const cardIDs = getFolderIDs(rootFolder)
+    throw ReferenceError(
+      `Passed invalid cardID "${cardID}". Expected one of: ${cardIDs}`
+    )
+  }
+
+  // Persist to fs
+  await writeFile(STORE_PATH, JSON.stringify(rootFolder, null, 2))
+}
+
 export async function createFolder(
   parentFolderID: string,
   title: string
