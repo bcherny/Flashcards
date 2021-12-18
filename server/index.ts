@@ -1,4 +1,10 @@
-import {createCard, createFolder, updateCard, getRootFolder} from './db'
+import {
+  createCard,
+  createFolder,
+  updateCard,
+  updateFolder,
+  getRootFolder,
+} from './db'
 import {get, post, put, startServer} from './server'
 
 process.on('unhandledRejection', (reason, p) => {
@@ -40,6 +46,11 @@ function main() {
   })
 
   // Edit folder
+  put('/api/folder/:folderID', async (req) => {
+    return {
+      data: await updateFolder(req.params.folderID, req.body.title),
+    }
+  })
 
   // Delete folder
 

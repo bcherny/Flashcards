@@ -1,7 +1,7 @@
 {
   "id": "root",
   "type": "folder",
-  "title": "Boris' cards",
+  "title": "Bar",
   "contents": [
     {
       "id": "476145b",
@@ -16,7 +16,7 @@
     {
       "id": "68106d7",
       "type": "folder",
-      "title": "test",
+      "title": "Bar",
       "contents": []
     }
   ]

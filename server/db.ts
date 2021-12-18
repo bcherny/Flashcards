@@ -107,6 +107,27 @@ export async function createFolder(
   return folder
 }
 
+export async function updateFolder(
+  folderID: string,
+  title: string
+): Promise<Folder> {
+  // Validate
+  validateFolderTitle(title)
+
+  // Create folder
+  const folder: Folder = {
+    id: folderID,
+    type: 'folder',
+    title,
+    contents: [], // Ignored in update. TODO: Improve this API
+  }
+
+  // Update it
+  await updateFolderInDB(folder)
+
+  return folder
+}
+
 // Very inefficient & unreliable but simple update
 async function updateCardInDB(card: Card): Promise<void> {
   const rootFolder = await getRootFolder()
@@ -200,6 +221,37 @@ async function addNewFolderToDB(
     const folderIDs = getFolderIDs(rootFolder)
     throw ReferenceError(
       `Unable to find invalid folderID "${parentFolderID}". Expected one of: ${folderIDs}`
+    )
+  }
+
+  // Persist to fs
+  await writeFile(STORE_PATH, JSON.stringify(rootFolder, null, 2))
+}
+
+// Very inefficient & unreliable but simple update
+async function updateFolderInDB(folder: Folder): Promise<void> {
+  const rootFolder = await getRootFolder()
+
+  // Update reference in memory
+  function update(f: Folder): boolean {
+    if (f.id === folder.id) {
+      f.title = folder.title
+      return true
+    }
+    for (const subFolder of f.contents.filter(isFolder)) {
+      if (update(subFolder)) {
+        return true
+      }
+    }
+    return false
+  }
+
+  // Check result
+  const result = update(rootFolder)
+  if (!result) {
+    const folderIDs = getFolderIDs(rootFolder)
+    throw ReferenceError(
+      `Passed invalid folderID "${folder.id}". Expected one of: ${folderIDs}`
     )
   }
 

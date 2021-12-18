@@ -34,3 +34,22 @@ PUT http://localhost:3000/api/cards/:cardID
 	"front": {"text": "Bar"},
 }
 ```
+
+## Create folder
+
+```
+POST http://localhost:3000/api/folder/
+{
+	"title": "Foo",
+	"parentFolderID": "root"
+}
+```
+
+## Update folder
+
+```
+PUT http://localhost:3000/api/folder/:folderID
+{
+	"title": "Bar",
+}
+```
