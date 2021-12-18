@@ -11,13 +11,13 @@ yarn dev
 ## Read all cards
 
 ```
-GET http://localhost:3000/api/cards/
+GET https://localhost:3000/api/cards/
 ```
 
 ## Create card
 
 ```
-POST http://localhost:3000/api/cards/
+POST https://localhost:3000/api/cards/
 {
 	"back": {"text": "Foo"},
 	"front": {"text": "Bar"},
@@ -28,7 +28,7 @@ POST http://localhost:3000/api/cards/
 ## Update card
 
 ```
-PUT http://localhost:3000/api/cards/:cardID
+PUT https://localhost:3000/api/cards/:cardID
 {
 	"back": {"text": "Foo"},
 	"front": {"text": "Bar"},
@@ -38,13 +38,13 @@ PUT http://localhost:3000/api/cards/:cardID
 ## Delete card
 
 ```
-DELETE http://localhost:3000/api/cards/:cardID
+DELETE https://localhost:3000/api/cards/:cardID
 ```
 
 ## Create folder
 
 ```
-POST http://localhost:3000/api/folders/
+POST https://localhost:3000/api/folders/
 {
 	"title": "Foo",
 	"parentFolderID": "root"
@@ -54,7 +54,7 @@ POST http://localhost:3000/api/folders/
 ## Update folder
 
 ```
-PUT http://localhost:3000/api/folders/:folderID
+PUT https://localhost:3000/api/folders/:folderID
 {
 	"title": "Bar",
 }
@@ -63,5 +63,12 @@ PUT http://localhost:3000/api/folders/:folderID
 ## Delete folder
 
 ```
-DELETE http://localhost:3000/api/folders/:folderID
+DELETE https://localhost:3000/api/folders/:folderID
+```
+
+# Generating a local TLS cert for testing
+
+```
+brew install mkcert
+mkcert -key-file test-certs/key.pem -cert-file test-certs/cert.pem localhost
 ```

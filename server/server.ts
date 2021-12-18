@@ -2,6 +2,8 @@ import type {Request, Response} from 'express'
 import express from 'express'
 import {memoize} from 'lodash'
 import bodyParser from 'body-parser'
+import {createServer} from 'https'
+import {readFileSync} from 'fs'
 
 type RouteResponse = {
   data: {}
@@ -71,5 +73,12 @@ export function del(
 
 export function startServer() {
   const app = getApp()
-  app.listen(3000, () => console.info('Server listening on 3000...'))
+  const server = createServer(
+    {
+      key: readFileSync('./test-certs/key.pem', 'utf8'),
+      cert: readFileSync('./test-certs/cert.pem', 'utf8'),
+    },
+    app
+  )
+  server.listen(3000, () => console.info('Server listening on 3000...'))
 }
