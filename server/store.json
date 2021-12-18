@@ -1,0 +1,17 @@
+{
+  "id": "root",
+  "type": "folder",
+  "title": "Boris' cards",
+  "contents": [
+    {
+      "id": "4HZtXjWHh6NTZ2uPoeBCcr",
+      "type": "card",
+      "front": {
+        "text": "Front test"
+      },
+      "back": {
+        "text": "Back test"
+      }
+    }
+  ]
+}
