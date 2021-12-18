@@ -104,7 +104,7 @@ export async function deleteCard(cardID: string): Promise<void> {
   // Check result
   const result = del(rootFolder)
   if (!result) {
-    const cardIDs = getFolderIDs(rootFolder)
+    const cardIDs = getCardIDs(rootFolder)
     throw ReferenceError(
       `Passed invalid cardID "${cardID}". Expected one of: ${cardIDs}`
     )
@@ -157,6 +157,38 @@ export async function updateFolder(
   await updateFolderInDB(folder)
 
   return folder
+}
+
+export async function deleteFolder(folderID: string): Promise<void> {
+  const rootFolder = await getRootFolder()
+
+  // Update reference in memory
+  function del(folder: Folder): boolean {
+    for (let i = 0; i < folder.contents.length; i++) {
+      const item = folder.contents[i]
+      if (!isFolder(item)) {
+        continue
+      }
+      if (item.id === folderID) {
+        folder.contents.splice(i, 1)
+        return true
+      }
+      return del(item)
+    }
+    return false
+  }
+
+  // Check result
+  const result = del(rootFolder)
+  if (!result) {
+    const folderIDs = getFolderIDs(rootFolder)
+    throw ReferenceError(
+      `Passed invalid folderID "${folderID}". Expected one of: ${folderIDs}`
+    )
+  }
+
+  // Persist to fs
+  await writeFile(STORE_PATH, JSON.stringify(rootFolder, null, 2))
 }
 
 // Very inefficient & unreliable but simple update

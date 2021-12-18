@@ -59,3 +59,9 @@ PUT http://localhost:3000/api/folders/:folderID
 	"title": "Bar",
 }
 ```
+
+## Delete folder
+
+```
+DELETE http://localhost:3000/api/folders/:folderID
+```

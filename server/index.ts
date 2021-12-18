@@ -5,6 +5,7 @@ import {
   updateCard,
   updateFolder,
   getRootFolder,
+  deleteFolder,
 } from './db'
 import {del, get, post, put, startServer} from './server'
 
@@ -62,6 +63,9 @@ function main() {
   })
 
   // Delete folder
+  del('/api/folders/:folderID', async (req) => {
+    await deleteFolder(req.params.folderID)
+  })
 
   startServer()
 }

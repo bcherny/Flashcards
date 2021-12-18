@@ -2,12 +2,5 @@
   "id": "root",
   "type": "folder",
   "title": "Bar",
-  "contents": [
-    {
-      "id": "68106d7",
-      "type": "folder",
-      "title": "Bar",
-      "contents": []
-    }
-  ]
+  "contents": []
 }
