@@ -1,4 +1,4 @@
-import {createCard, updateCard, getRootFolder} from './db'
+import {createCard, createFolder, updateCard, getRootFolder} from './db'
 import {get, post, put, startServer} from './server'
 
 process.on('unhandledRejection', (reason, p) => {
@@ -33,6 +33,11 @@ function main() {
   // Delete card
 
   // Create folder
+  post('/api/folder', async (req) => {
+    return {
+      data: await createFolder(req.body.parentFolderID, req.body.title),
+    }
+  })
 
   // Edit folder
 

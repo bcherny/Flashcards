@@ -83,6 +83,30 @@ export async function updateCard(
   return card
 }
 
+export async function createFolder(
+  parentFolderID: string,
+  title: string
+): Promise<Folder> {
+  const folderID = sha1(parentFolderID + ID_SEPARATOR + title)
+
+  // Validate
+  validateFolderTitle(title)
+  await validateNewFolderID(folderID)
+
+  // Create folder
+  const folder: Folder = {
+    id: folderID,
+    type: 'folder',
+    title,
+    contents: [],
+  }
+
+  // Insert it
+  await addNewFolderToDB(folder, parentFolderID)
+
+  return folder
+}
+
 // Very inefficient & unreliable but simple update
 async function updateCardInDB(card: Card): Promise<void> {
   const rootFolder = await getRootFolder()
@@ -122,14 +146,14 @@ async function updateCardInDB(card: Card): Promise<void> {
 async function addNewCardToDB(card: Card, folderID: string): Promise<void> {
   const rootFolder = await getRootFolder()
 
-  // Update in memory
+  // Update reference in memory
   function add(folder: Folder): boolean {
     if (folder.id === folderID) {
       folder.contents.push(card)
       return true
     }
-    for (const folder of rootFolder.contents.filter(isFolder)) {
-      if (add(folder)) {
+    for (const f of folder.contents.filter(isFolder)) {
+      if (add(f)) {
         return true
       }
     }
@@ -142,6 +166,40 @@ async function addNewCardToDB(card: Card, folderID: string): Promise<void> {
     const folderIDs = getFolderIDs(rootFolder)
     throw ReferenceError(
       `Unable to find invalid folderID "${folderID}". Expected one of: ${folderIDs}`
+    )
+  }
+
+  // Persist to fs
+  await writeFile(STORE_PATH, JSON.stringify(rootFolder, null, 2))
+}
+
+// Very inefficient & unreliable but simple insert
+async function addNewFolderToDB(
+  folder: Folder,
+  parentFolderID: string
+): Promise<void> {
+  const rootFolder = await getRootFolder()
+
+  // Update reference in memory
+  function add(parentFolder: Folder): boolean {
+    if (parentFolder.id === parentFolderID) {
+      parentFolder.contents.push(folder)
+      return true
+    }
+    for (const folder of parentFolder.contents.filter(isFolder)) {
+      if (add(folder)) {
+        return true
+      }
+    }
+    return false
+  }
+
+  // Check result
+  const result = add(rootFolder)
+  if (!result) {
+    const folderIDs = getFolderIDs(rootFolder)
+    throw ReferenceError(
+      `Unable to find invalid folderID "${parentFolderID}". Expected one of: ${folderIDs}`
     )
   }
 
@@ -178,10 +236,26 @@ async function validateNewCardID(cardID: string): Promise<void> {
   const rootFolder = await getRootFolder()
   const cardIDs = getCardIDs(rootFolder)
   if (cardIDs.includes(cardID)) {
-    throw new DuplicateCardError(
+    throw new DuplicateError(
       `Card with ID ${cardID} already exists in the database!`
     )
   }
 }
 
-class DuplicateCardError extends ReferenceError {}
+async function validateNewFolderID(folderID: string): Promise<void> {
+  const rootFolder = await getRootFolder()
+  const folderIDs = getFolderIDs(rootFolder)
+  if (folderIDs.includes(folderID)) {
+    throw new DuplicateError(
+      `Folder with ID ${folderID} already exists in the database!`
+    )
+  }
+}
+
+function validateFolderTitle(title: string): void {
+  if (title.length < 1) {
+    throw RangeError('Expected title to have at least one character')
+  }
+}
+
+class DuplicateError extends ReferenceError {}

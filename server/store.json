@@ -12,6 +12,12 @@
       "back": {
         "text": "Back test3"
       }
+    },
+    {
+      "id": "68106d7",
+      "type": "folder",
+      "title": "test",
+      "contents": []
     }
   ]
 }
