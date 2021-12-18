@@ -36,6 +36,22 @@ export function post(
   })
 }
 
+export function put(
+  route: string,
+  fn: (req: Request, res: Response) => Promise<RouteResponse>
+) {
+  const app = getApp().use(bodyParser.json())
+  app.put(route, async (req, res) => {
+    try {
+      res.json(await fn(req, res))
+    } catch (e) {
+      res.status(400).json({
+        error: (e as any).message,
+      })
+    }
+  })
+}
+
 export function startServer() {
   const app = getApp()
   app.listen(3000, () => console.info('Server listening on 3000...'))

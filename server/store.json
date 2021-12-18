@@ -4,13 +4,13 @@
   "title": "Boris' cards",
   "contents": [
     {
-      "id": "4HZtXjWHh6NTZ2uPoeBCcr",
+      "id": "476145b",
       "type": "card",
       "front": {
         "text": "Front test"
       },
       "back": {
-        "text": "Back test"
+        "text": "Back test3"
       }
     }
   ]

@@ -5,7 +5,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev": "nodemon index.ts"
+    "dev": "nodemon --ignore store.json index.ts"
   },
   "dependencies": {
     "@types/express": "^4.17.13",
