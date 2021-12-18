@@ -21,7 +21,7 @@ POST http://localhost:3000/api/cards/
 {
 	"back": {"text": "Foo"},
 	"front": {"text": "Bar"},
-	"folderID": "root"
+	"parentFolderID": "root"
 }
 ```
 
@@ -38,7 +38,7 @@ PUT http://localhost:3000/api/cards/:cardID
 ## Create folder
 
 ```
-POST http://localhost:3000/api/folder/
+POST http://localhost:3000/api/folders/
 {
 	"title": "Foo",
 	"parentFolderID": "root"
@@ -48,7 +48,7 @@ POST http://localhost:3000/api/folder/
 ## Update folder
 
 ```
-PUT http://localhost:3000/api/folder/:folderID
+PUT http://localhost:3000/api/folders/:folderID
 {
 	"title": "Bar",
 }
