@@ -1,10 +1,6 @@
 import Constants from 'expo-constants'
 
-export default {
-  FIREBASE_API_KEY: nullthrows<string>(
-    Constants.manifest?.extra?.FIREBASE_API_KEY
-  ),
-}
+export default {}
 
 function nullthrows<A>(a: A | undefined): A {
   if (a === undefined) {

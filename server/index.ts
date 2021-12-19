@@ -19,9 +19,7 @@ function main() {
   // Read cards
   get('/api/cards', async () => {
     return {
-      data: {
-        cards: await getRootFolder(),
-      },
+      data: await getRootFolder(),
     }
   })
 

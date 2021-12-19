@@ -7,23 +7,23 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native'
 import SkeletonContent from 'react-native-skeleton-content'
-import useDecks from '../../hooks/useDecks'
+import useFolders from '../../hooks/useFolders'
 import {RootStackParamList} from '../../Navigator'
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Decks'>
 
 export default function Decks({navigation, route}: Props): React.ReactElement {
-  const [isLoading, data] = useDecks(route.params.collectionID)
+  const data = useFolders(route.params.folderID)
   return (
-    <SkeletonContent isLoading={isLoading} containerStyle={styles.skeleton}>
+    <SkeletonContent isLoading={!data.length} containerStyle={styles.skeleton}>
       <FlatList
         data={data}
-        keyExtractor={(_) => _.name}
-        renderItem={({item: {name}}) => (
+        keyExtractor={(_) => _.title}
+        renderItem={({item: {title}}) => (
           <TouchableWithoutFeedback
-            onPress={() => navigation.navigate('Cards', {name})}
+            onPress={() => navigation.navigate('Cards', {title})}
           >
-            <Text style={styles.item}>{name}</Text>
+            <Text style={styles.item}>{title}</Text>
           </TouchableWithoutFeedback>
         )}
       />

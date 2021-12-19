@@ -1,6 +1,58 @@
 {
   "id": "root",
   "type": "folder",
-  "title": "Bar",
-  "contents": []
+  "title": "CCSF Japanese 1A",
+  "contents": [
+    {
+      "id": "a07a777",
+      "type": "folder",
+      "title": "Chapter 1",
+      "contents": [
+        {
+          "id": "0e9ac3b",
+          "type": "card",
+          "front": {
+            "text": "わたし"
+          },
+          "back": {
+            "text": "I"
+          }
+        },
+        {
+          "id": "663d626",
+          "type": "card",
+          "front": {
+            "text": "ぼく"
+          },
+          "back": {
+            "text": "I (male)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "d0542ad",
+      "type": "folder",
+      "title": "Chapter 2",
+      "contents": []
+    },
+    {
+      "id": "e60f680",
+      "type": "folder",
+      "title": "Chapter 3",
+      "contents": []
+    },
+    {
+      "id": "b318a3e",
+      "type": "folder",
+      "title": "Chapter 4",
+      "contents": []
+    },
+    {
+      "id": "f2aaf75",
+      "type": "folder",
+      "title": "Chapter 5",
+      "contents": []
+    }
+  ]
 }

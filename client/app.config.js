@@ -5,9 +5,6 @@ export default {
     name: 'Flashcards',
     slug: 'flashcards',
     version: '1.0.0',
-    extra: {
-      FIREBASE_API_KEY: process.env.FIREBASE_API_KEY,
-    },
     orientation: 'portrait',
     icon: './assets/icon.png',
     splash: {

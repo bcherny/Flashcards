@@ -4,12 +4,20 @@ import {memoize} from 'lodash'
 import bodyParser from 'body-parser'
 import {createServer} from 'https'
 import {readFileSync} from 'fs'
+import cors from 'cors'
 
 type RouteResponse = {
   data: {}
 }
 
-const getApp = memoize(express)
+const getApp = memoize(() =>
+  express().use(
+    cors({
+      origin: '*',
+      credentials: true, //access-control-allow-credentials:true
+    })
+  )
+)
 
 export function get(
   route: string,

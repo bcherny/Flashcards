@@ -1,28 +1,11 @@
 import {readFile, writeFile} from 'fs/promises'
 import {isPlainObject} from 'lodash'
 import {join} from 'path'
+import type {Card, CardData, Folder} from '../shared/types'
 import {sha1} from './utils'
 
 const STORE_PATH = join(__dirname, './store.json')
 const ID_SEPARATOR = '---'
-
-type Folder = {
-  id: string
-  type: 'folder'
-  title: string
-  contents: (Card | Folder)[]
-}
-
-type CardData = {
-  [k: string]: string
-}
-
-type Card = {
-  id: string
-  type: 'card'
-  front: CardData
-  back: CardData
-}
 
 export async function getRootFolder(): Promise<Folder> {
   return JSON.parse(await readFile(STORE_PATH, {encoding: 'utf8'}))
